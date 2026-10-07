@@ -1,0 +1,254 @@
+{
+ "now-playing": {
+  "data": [
+   {
+    "id": 23,
+    "slug": "buddy-1514026",
+    "title": "Buddy",
+    "kind": "film",
+    "runtimeMinutes": 95,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/szMG36D2cIxeQ7i5zRQbq0DnNDe.jpg",
+    "backdropUrl": "https://image.tmdb.org/t/p/w1280/ytoLEl5yDaxB8AtZ52uKWjaQ9ql.jpg",
+    "releaseDate": "2026-08-27",
+    "isComingSoon": false,
+    "isNotified": false,
+    "isFeatured": false,
+    "fromPrice": 12,
+    "ageRating": {
+     "code": "16+",
+     "minAge": 16,
+     "description": "Restricted to viewers aged 16 and over. Child tickets are unavailable."
+    },
+    "genres": [
+     {
+      "id": 4,
+      "slug": "horror",
+      "name": "Horror"
+     },
+     "... 3 total"
+    ],
+    "formats": [
+     {
+      "id": 4,
+      "slug": "panorama",
+      "name": "PANORAMA",
+      "priceUplift": 5
+     }
+    ],
+    "synopsis": "A magical, singing orange unicorn holds his cast hostage in a surreal TV-show dimension, as he becomes more and more demented."
+   },
+   "... 24 total"
+  ]
+ },
+ "sessions": {
+  "data": [
+   {
+    "movie": {
+     "id": 1,
+     "slug": "the-end-of-oak-street-1101383",
+     "title": "The End of Oak Street",
+     "kind": "film",
+     "runtimeMinutes": 100,
+     "posterUrl": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
+     "backdropUrl": "https://image.tmdb.org/t/p/w1280/b9q9VmbXDvJmTziRqkwdEmFdwhr.jpg",
+     "releaseDate": "2026-08-12",
+     "isComingSoon": false,
+     "isNotified": false,
+     "isFeatured": true,
+     "fromPrice": 14,
+     "ageRating": {
+      "code": "12+",
+      "minAge": 12,
+      "description": "Not recommended for under-12s. Tickets require an account aged 12 or over."
+     },
+     "genres": [
+      {
+       "id": 1,
+       "slug": "science-fiction",
+       "name": "Science Fiction"
+      },
+      "... 3 total"
+     ],
+     "formats": [
+      {
+       "id": 3,
+       "slug": "atmos",
+       "name": "ATMOS",
+       "priceUplift": 4
+      },
+      "... 2 total"
+     ]
+    },
+    "sessions": [
+     {
+      "id": 1203,
+      "startsAt": "2026-10-07T10:00:00+00:00",
+      "date": "2026-10-07",
+      "time": "10:00",
+      "timeBand": "morning",
+      "price": 22,
+      "seatsLeft": 82,
+      "isSoldOut": false,
+      "hall": {
+       "id": 2,
+       "name": "B",
+       "venue": {
+        "id": 1,
+        "slug": "galleria",
+        "name": "Galleria Tbilisi",
+        "city": "Tbilisi"
+       }
+      },
+      "venue": {
+       "id": 1,
+       "slug": "galleria",
+       "name": "Galleria Tbilisi",
+       "city": "Tbilisi"
+      },
+      "format": {
+       "id": 5,
+       "slug": "motion",
+       "name": "MOTION",
+       "priceUplift": 8
+      },
+      "language": {
+       "id": 3,
+       "slug": "original-subtitles",
+       "name": "Original with Subtitles",
+       "code": "ENG"
+      },
+      "movie": {
+       "id": 1,
+       "slug": "the-end-of-oak-street-1101383",
+       "title": "The End of Oak Street",
+       "kind": "film",
+       "runtimeMinutes": 100,
+       "posterUrl": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
+       "backdropUrl": "https://image.tmdb.org/t/p/w1280/b9q9VmbXDvJmTziRqkwdEmFdwhr.jpg",
+       "releaseDate": "2026-08-12",
+       "isComingSoon": false,
+       "isNotified": false,
+       "isFeatured": true,
+       "fromPrice": 14,
+       "ageRating": {
+        "code": "12+",
+        "minAge": 12,
+        "description": "Not recommended for under-12s. Tickets require an account aged 12 or over."
+       },
+       "genres": [
+        {
+         "id": 1,
+         "slug": "science-fiction",
+         "name": "Science Fiction"
+        },
+        "... 3 total"
+       ],
+       "formats": [
+        {
+         "id": 3,
+         "slug": "atmos",
+         "name": "ATMOS",
+         "priceUplift": 4
+        },
+        "... 2 total"
+       ]
+      }
+     },
+     "... 3 total"
+    ]
+   },
+   "... 10 total"
+  ],
+  "meta": {
+   "currentPage": 1,
+   "lastPage": 3,
+   "perPage": 10,
+   "totalSessions": 66,
+   "totalMovies": 24,
+   "date": "2026-10-07"
+  }
+ },
+ "seats": {
+  "data": {
+   "sessionId": 1203,
+   "hall": {
+    "id": 2,
+    "name": "B",
+    "venue": {
+     "id": 1,
+     "slug": "galleria",
+     "name": "Galleria Tbilisi",
+     "city": "Tbilisi"
+    }
+   },
+   "sections": [
+    {
+     "name": "Front stalls",
+     "rows": [
+      {
+       "label": "A",
+       "seats": [
+        {
+         "id": 93,
+         "code": "A1",
+         "label": "1",
+         "state": "available",
+         "aisleAfter": false,
+         "isMine": false
+        },
+        "... 10 total"
+       ]
+      },
+      "... 3 total"
+     ]
+    },
+    "... 2 total"
+   ]
+  }
+ },
+ "movie": {
+  "data": {
+   "id": 1,
+   "slug": "the-end-of-oak-street-1101383",
+   "title": "The End of Oak Street",
+   "kind": "film",
+   "runtimeMinutes": 100,
+   "posterUrl": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
+   "backdropUrl": "https://image.tmdb.org/t/p/w1280/b9q9VmbXDvJmTziRqkwdEmFdwhr.jpg",
+   "releaseDate": "2026-08-12",
+   "isComingSoon": false,
+   "isNotified": false,
+   "isFeatured": true,
+   "fromPrice": 14,
+   "ageRating": {
+    "code": "12+",
+    "minAge": 12,
+    "description": "Not recommended for under-12s. Tickets require an account aged 12 or over."
+   },
+   "genres": [
+    {
+     "id": 1,
+     "slug": "science-fiction",
+     "name": "Science Fiction"
+    },
+    "... 3 total"
+   ],
+   "formats": [
+    {
+     "id": 3,
+     "slug": "atmos",
+     "name": "ATMOS",
+     "priceUplift": 4
+    },
+    "... 2 total"
+   ],
+   "synopsis": "After a mysterious cosmic event rips Oak Street from suburbia and transports their neighborhood to someplace unknown, the Platt family soon discovers that their very survival depends on them sticking together as they navigate their now unrecognizable surroundings.",
+   "director": "David Robert Mitchell",
+   "cast": "Anne Hathaway, Ewan McGregor, Maisy Stella",
+   "availableDates": [
+    "2026-10-08",
+    "... 12 total"
+   ]
+  }
+ }
+}

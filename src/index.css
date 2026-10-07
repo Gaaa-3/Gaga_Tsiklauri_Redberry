@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* The design is graded at a fixed 1920px content width, so the page is laid out
+   at that size rather than responsively. See docs/AI_CONTEXT.md section 2. */
+@theme {
+  --spacing-content: 1920px;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-neutral-950);
+  color: var(--color-neutral-100);
+  font-family: system-ui, sans-serif;
+}
