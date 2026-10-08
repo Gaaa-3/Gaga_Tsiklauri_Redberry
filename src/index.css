@@ -1,9 +1,50 @@
 @import "tailwindcss";
 
-/* The design is graded at a fixed 1920px content width, so the page is laid out
-   at that size rather than responsively. See docs/AI_CONTEXT.md section 2. */
+/* Design tokens, read straight off the Figma exports in /images by sampling the
+   PNGs — so these are the file's actual values, not an approximation.
+   Everything visual in the app refers to a token here; no screen hardcodes a hex.
+
+   The exports are 1728px wide, which is 0.9x of the 1920px frame the assignment
+   is graded at, so every pixel measurement below is the measured value / 0.9. */
 @theme {
+  /* ---- Surfaces -------------------------------------------------------- */
+  /* The page itself. */
+  --color-page: #070c1c;
+  /* Cards, inputs, the filter sidebar, seat tiles. */
+  --color-surface: #1e2031;
+  /* A sold-out session card or any disabled block — darker than the page. */
+  --color-surface-muted: #101424;
+  /* Format badges and the screen bar: one step up from a card. */
+  --color-surface-raised: #2a2c3d;
+  /* Hairlines, card outlines, the seat tile border. */
+  --color-line: #2a2c3d;
+  /* A control that is present but not actionable: the disabled "Log in". */
+  --color-control: #505261;
+
+  /* ---- Brand and status ------------------------------------------------ */
+  /* The one accent in the whole design: primary buttons, the active page, the
+     logo's "XII", the age badge, the selected seat, low-seats warnings. */
+  --color-brand: #ec3013;
+  /* Plenty of seats left. */
+  --color-available: #4ade80;
+
+  /* ---- Text ------------------------------------------------------------ */
+  --color-ink: #ffffff;
+  --color-ink-muted: #a9a9a9;
+  --color-ink-dim: #6a6d77;
+
+  /* ---- Layout ---------------------------------------------------------- */
+  /* Graded at a fixed 1920px content width; responsiveness is not required. */
   --spacing-content: 1920px;
+  /* The page gutter, measured at 51px in the 0.9x export. */
+  --spacing-gutter: 56px;
+  /* The navbar band. */
+  --spacing-navbar: 108px;
+
+  /* The hero title on the home page. Everything else fits Tailwind's own
+     scale, which already matches the design: 12 / 14 / 16 / 18 / 20 / 30. */
+  --text-hero: 60px;
+  --text-hero--line-height: 1.05;
 }
 
 html {
@@ -12,7 +53,25 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--color-neutral-950);
-  color: var(--color-neutral-100);
-  font-family: system-ui, sans-serif;
+  background-color: var(--color-page);
+  color: var(--color-ink);
+  font-family: Inter, system-ui, sans-serif;
+  /* The design is tracked slightly tight, which is what gives the headings
+     their compact look. */
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings in the design are heavy and tighter still. */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+/* One visible focus ring everywhere, so keyboard users can always see where
+   they are without each component inventing its own. */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
 }
