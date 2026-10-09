@@ -12,29 +12,64 @@ const SLIDE_MS = 7000
  *  throughout and costs one opacity transition instead of a layout animation. */
 export function Hero({ movies }) {
   const [index, setIndex] = useState(0)
-  // Paused while the pointer is over the hero, so a user reading the synopsis
-  // does not have it yanked away mid-sentence.
+  // Paused only while the pointer is over the control strip itself, so a click
+  // on an arrow is not stolen by the slide changing underneath it. Pausing on
+  // the whole hero was wrong: it is 800px tall and fills most of the window, so
+  // a cursor resting anywhere over it froze the carousel indefinitely.
   const [paused, setPaused] = useState(false)
 
   const count = movies.length
 
-  const go = useCallback(
-    (next) => setIndex(((next % count) + count) % count),
-    [count],
-  )
+  const go = useCallback((next) => setIndex(((next % count) + count) % count), [count])
 
-  // Restarting this timer on every index change is deliberate: clicking an
-  // arrow should give you a fresh 7 seconds, not the tail of the old interval.
+  // The progress bar and the advance are driven by one animation frame loop
+  // rather than by a CSS animation plus a separate timer. Two clocks drift —
+  // and pausing would desynchronise them — whereas this way the red line
+  // reaching the end of its segment *is* what advances the slide.
+  const fillRef = useRef(null)
+  const pausedRef = useRef(paused)
+  useEffect(() => {
+    pausedRef.current = paused
+  }, [paused])
+
   const goRef = useRef(go)
   useEffect(() => {
     goRef.current = go
   }, [go])
 
   useEffect(() => {
-    if (paused || count < 2) return
-    const timer = setTimeout(() => goRef.current(index + 1), SLIDE_MS)
-    return () => clearTimeout(timer)
-  }, [index, paused, count])
+    if (count < 2) return
+
+    let frame
+    let elapsed = 0
+    let last = null
+
+    function tick(now) {
+      if (last === null) last = now
+      // Clamped because requestAnimationFrame stops firing in a hidden tab:
+      // without this, coming back after a minute would bank the whole gap at
+      // once and flick straight past a slide.
+      const delta = Math.min(now - last, 100)
+      last = now
+
+      if (!pausedRef.current) elapsed += delta
+
+      const progress = Math.min(elapsed / SLIDE_MS, 1)
+      // Written straight to the DOM: this runs ~60 times a second and must not
+      // re-render the hero each frame.
+      if (fillRef.current) fillRef.current.style.transform = `scaleX(${progress})`
+
+      if (progress >= 1) {
+        goRef.current(index + 1)
+        return
+      }
+      frame = requestAnimationFrame(tick)
+    }
+
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+    // Restarting on `index` is the point: each slide gets a fresh, full bar.
+  }, [index, count])
 
   if (count === 0) return null
 
@@ -43,8 +78,6 @@ export function Hero({ movies }) {
   return (
     <section
       className="relative h-[800px] w-full overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
       aria-label="Featured films"
     >
@@ -80,7 +113,13 @@ export function Hero({ movies }) {
             <span className="inline-flex h-6 items-center gap-1.5 rounded-md bg-surface/80 px-2 text-xs font-semibold text-ink-muted">
               <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5">
                 <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" />
-                <path d="M12 7v5l3 2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M12 7v5l3 2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
               </svg>
               {movie.runtimeMinutes} Min
             </span>
@@ -127,9 +166,14 @@ export function Hero({ movies }) {
       </div>
 
       {count > 1 && (
-        <div className="absolute inset-x-0 bottom-10 mx-auto flex w-content items-center gap-6 px-rail">
-          {/* One segment per film. The active one fills brand red; the rest are
-              hairlines. Clicking a segment jumps straight to that film. */}
+        <div
+          className="absolute inset-x-0 bottom-10 mx-auto flex w-content items-center gap-6 px-rail"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {/* One segment per film. The current one's red line grows from left to
+              right over the slide's 7 seconds; reaching the end is what moves
+              the carousel on. The rest stay as hairlines. */}
           <div className="flex flex-1 gap-2">
             {movies.map((item, i) => (
               <button
@@ -140,11 +184,19 @@ export function Hero({ movies }) {
                 aria-current={i === index}
                 className="group h-3 flex-1"
               >
-                <span
-                  className={`block h-0.5 w-full rounded-full transition-colors ${
-                    i === index ? 'bg-brand' : 'bg-ink/30 group-hover:bg-ink/60'
-                  }`}
-                />
+                <span className="block h-0.5 w-full overflow-hidden rounded-full bg-ink/25 transition-colors group-hover:bg-ink/40">
+                  {i === index && (
+                    <span
+                      ref={fillRef}
+                      // The starting scale is set inline, not with Tailwind's
+                      // `scale-x-0`: that compiles to the standalone `scale`
+                      // property, which applies *on top of* the `transform`
+                      // this bar is animated with, pinning it to zero width.
+                      style={{ transform: 'scaleX(0)' }}
+                      className="block h-full w-full origin-left rounded-full bg-brand"
+                    />
+                  )}
+                </span>
               </button>
             ))}
           </div>
