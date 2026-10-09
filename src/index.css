@@ -39,8 +39,13 @@
   /* ---- Layout ---------------------------------------------------------- */
   /* Graded at a fixed 1920px content width; responsiveness is not required. */
   --spacing-content: 1920px;
-  /* The page gutter, measured at 51px in the 0.9x export. */
-  --spacing-gutter: 56px;
+  /* The navbar and footer gutter. Re-measured off the full-resolution Figma
+     export: the Log in pill's right edge sits 68.9px in. */
+  --spacing-gutter: 68px;
+  /* Home page sections sit slightly further in than the navbar does — the Now
+     Playing card's left edge measures 77.8px. That difference is in the design,
+     not a mistake. */
+  --spacing-rail: 78px;
   /* The navbar band. */
   --spacing-navbar: 108px;
 
