@@ -83,7 +83,11 @@ export function MovieSessionGroup({ group, onSelectSession }) {
 
       <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
         {sessions.map((session) => (
-          <SessionCard key={session.id} session={session} onSelect={onSelectSession} />
+          <SessionCard
+            key={session.id}
+            session={session}
+            onSelect={(picked) => onSelectSession(picked, movie)}
+          />
         ))}
       </div>
     </section>

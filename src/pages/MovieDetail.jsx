@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
+import { BookingModal } from '../components/booking/BookingModal'
 import { DetailsPanel } from '../components/movie/DetailsPanel'
 import { MovieHero } from '../components/movie/MovieHero'
 import { VenueSessions } from '../components/movie/VenueSessions'
@@ -85,14 +86,6 @@ export function MovieDetailPage() {
             />
           </div>
 
-          {selectedSession && (
-            <p className="mt-5 rounded-xl bg-surface px-4 py-3 text-sm text-ink-muted">
-              Selected <span className="font-semibold text-ink">{selectedSession.time}</span> at{' '}
-              <span className="font-semibold text-ink">{selectedSession.venue.name}</span>, Hall{' '}
-              {selectedSession.hall.name}. Seat selection opens here next.
-            </p>
-          )}
-
           {sessions.isPending && (
             <div className="mt-6 flex gap-4">
               {Array.from({ length: 2 }, (_, i) => (
@@ -127,6 +120,14 @@ export function MovieDetailPage() {
 
         <DetailsPanel movie={film} />
       </div>
+
+      {selectedSession && (
+        <BookingModal
+          session={selectedSession}
+          movie={film}
+          onClose={() => setSelectedSession(null)}
+        />
+      )}
     </>
   )
 }

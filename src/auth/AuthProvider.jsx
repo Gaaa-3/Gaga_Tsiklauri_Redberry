@@ -135,6 +135,13 @@ export function AuthProvider({ children }) {
     [adopt],
   )
 
+  /** Replaces the cached user after the profile is saved, so the navbar's
+   *  completeness dot and the booking gate update from the server's response
+   *  rather than from a locally patched copy. */
+  const refreshUser = useCallback((updated) => {
+    setUser(updated)
+  }, [])
+
   const signOut = useCallback(async () => {
     try {
       await logout()
@@ -162,11 +169,24 @@ export function AuthProvider({ children }) {
       openRegister,
       closeModal,
       requireAuth,
+      refreshUser,
       signIn,
       signUp,
       signOut,
     }),
-    [user, status, modal, openLogin, openRegister, closeModal, requireAuth, signIn, signUp, signOut],
+    [
+      user,
+      status,
+      modal,
+      openLogin,
+      openRegister,
+      closeModal,
+      requireAuth,
+      refreshUser,
+      signIn,
+      signUp,
+      signOut,
+    ],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

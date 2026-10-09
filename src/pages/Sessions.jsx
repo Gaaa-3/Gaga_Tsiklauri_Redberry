@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../auth/useAuth'
+import { BookingModal } from '../components/booking/BookingModal'
 import { FilterSidebar } from '../components/sessions/FilterSidebar'
 import { Pagination } from '../components/sessions/Pagination'
 import { MovieSessionGroup } from '../components/sessions/SessionCard'
@@ -31,8 +32,8 @@ export function SessionsPage() {
    *
    *  The booking modal arrives with the seat-map slice; until then this records
    *  which showtime was chosen, which is what that modal will open on. */
-  function onSelectSession(session) {
-    requireAuth(() => setSelectedSession(session))
+  function onSelectSession(session, movie) {
+    requireAuth(() => setSelectedSession({ session, movie }))
   }
 
   return (
@@ -84,14 +85,6 @@ export function SessionsPage() {
               />
             )}
           </div>
-
-          {selectedSession && (
-            <p className="mt-4 rounded-xl bg-surface px-4 py-3 text-sm text-ink-muted">
-              Selected <span className="font-semibold text-ink">{selectedSession.time}</span> at{' '}
-              <span className="font-semibold text-ink">{selectedSession.venue.name}</span>, Hall{' '}
-              {selectedSession.hall.name}. Seat selection opens here next.
-            </p>
-          )}
 
           <div className="mt-2">
             {sessions.isPending &&
@@ -152,6 +145,14 @@ export function SessionsPage() {
           )}
         </div>
       </div>
+
+      {selectedSession && (
+        <BookingModal
+          session={selectedSession.session}
+          movie={selectedSession.movie}
+          onClose={() => setSelectedSession(null)}
+        />
+      )}
     </div>
   )
 }
