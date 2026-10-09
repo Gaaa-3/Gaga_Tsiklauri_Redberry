@@ -112,8 +112,8 @@ export function MyTickets() {
                     className="rounded-lg bg-surface-raised px-2.5 py-1 text-[11px] font-semibold"
                   >
                     {ticket.seatCode}
-                    <span className="ml-1.5 font-normal text-ink-muted capitalize">
-                      {ticket.ticketType}
+                    <span className="ml-1.5 font-normal text-ink-muted">
+                      {ticket.ticketType?.name}
                     </span>
                   </li>
                 ))}

@@ -253,8 +253,8 @@ export function BookingModal({ session, movie, onClose }) {
                     <li key={seat.seatId} className="flex justify-between text-xs">
                       <span className="font-semibold">
                         {seat.code}
-                        <span className="ml-2 font-normal text-ink-muted capitalize">
-                          {seat.ticketType}
+                        <span className="ml-2 font-normal text-ink-muted">
+                          {seat.ticketType?.name}
                         </span>
                       </span>
                       <span className="font-semibold">₾{seat.price}</span>

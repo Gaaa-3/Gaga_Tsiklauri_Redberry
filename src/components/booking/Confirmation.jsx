@@ -35,8 +35,8 @@ export function Confirmation({ order, onClose }) {
             <li key={ticket.id} className="flex items-center justify-between text-xs">
               <span className="font-semibold">
                 Seat {ticket.seatCode}
-                <span className="ml-2 font-normal text-ink-muted capitalize">
-                  {ticket.ticketType}
+                <span className="ml-2 font-normal text-ink-muted">
+                  {ticket.ticketType?.name}
                 </span>
               </span>
               <span className="font-semibold">₾{ticket.price}</span>

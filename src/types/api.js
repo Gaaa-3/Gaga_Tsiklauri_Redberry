@@ -172,7 +172,9 @@
  * @typedef {object} HeldSeat
  * @property {number} seatId
  * @property {string} code
- * @property {'adult'|'child'|'student'} ticketType
+ * @property {{slug: 'adult'|'child'|'student', name: string}} ticketType
+ *   An OBJECT, not a string — rendering it directly is a React "objects are not
+ *   valid as a child" error. Use ticketType.name.
  * @property {number} price
  */
 
@@ -192,7 +194,8 @@
  * @typedef {object} Ticket
  * @property {number} id
  * @property {string} seatCode
- * @property {'adult'|'child'|'student'} ticketType
+ * @property {{slug: 'adult'|'child'|'student', name: string}} ticketType
+ *   An OBJECT, not a string. Use ticketType.name.
  * @property {number} price
  */
 
