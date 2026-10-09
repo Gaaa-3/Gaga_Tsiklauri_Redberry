@@ -139,7 +139,7 @@ export function BookingModal({ session, movie, onClose }) {
     <Modal
       title={movie?.title ?? session.movie?.title ?? 'Book tickets'}
       onClose={onCloseModal}
-      widthClass="w-[1100px]"
+      widthClass="w-[1360px]"
     >
       {header}
 
@@ -170,7 +170,10 @@ export function BookingModal({ session, movie, onClose }) {
 
           {step === 'seats' ? (
             <div className="mt-6 flex gap-8">
-              <div className="min-w-0 flex-1">
+              {/* overflow-x-auto, not hidden: if a hall is ever wider than the
+                  modal, the far seats must stay reachable. Clipping them made
+                  the last five seats of every 14-wide row unclickable. */}
+              <div className="min-w-0 flex-1 overflow-x-auto pb-2">
                 {seatMap.isPending && (
                   <div className="h-[420px] animate-pulse rounded-2xl bg-surface" />
                 )}
