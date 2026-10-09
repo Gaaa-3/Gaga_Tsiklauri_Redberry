@@ -22,5 +22,4 @@ Interactive docs: [`/docs`](https://api.kinoxii.redberryinternship.ge/docs)
 
 ## Project docs
 
-- [`docs/AI_CONTEXT.md`](docs/AI_CONTEXT.md) — full feature spec, requirements and progress
 - [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md) — endpoints, schemas and error handling
