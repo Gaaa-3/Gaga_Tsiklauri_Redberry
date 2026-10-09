@@ -2,7 +2,8 @@
  *  type, and a subtotal that updates as you go.
  *
  *  Ticket types and their price ratios come from /filter-options — Adult 1.00,
- *  Student 0.75, Child 0.60 are never written down here. Child carries
+ *  Student 0.75, Child 0.60 are never written down here, and the percentages on
+ *  the pills are derived from the ratio rather than typed. Child carries
  *  `blockedFromRatingAge: 16`, so it is hidden entirely on a 16+ or 18+ title
  *  rather than offered and then refused. */
 export function SeatSummary({
@@ -10,6 +11,7 @@ export function SeatSummary({
   ticketTypes,
   ticketTypeBySeat,
   onChangeTicketType,
+  onRemoveSeat,
   basePrice,
   maxSeats,
   movieMinAge,
@@ -37,25 +39,55 @@ export function SeatSummary({
         {seats.map((seat) => {
           const slug = ticketTypeBySeat[seat.id] ?? 'adult'
           const note = allowedTypes.find((type) => type.slug === slug)?.note
+
           return (
             <div key={seat.id} className="rounded-xl bg-surface p-3">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-sm font-bold">{seat.code}</span>
-                <span className="text-sm font-bold">₾{priceFor(seat.id)}</span>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-bold">Seat {seat.code}</span>
+                <span className="flex items-center gap-2">
+                  <span className="text-xs font-bold">₾{priceFor(seat.id)}</span>
+                  <button
+                    type="button"
+                    onClick={() => onRemoveSeat(seat)}
+                    aria-label={`Remove seat ${seat.code}`}
+                    className="flex size-5 items-center justify-center rounded text-ink-dim transition-colors hover:bg-surface-raised hover:text-ink"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3">
+                      <path
+                        d="M6 6l12 12M18 6L6 18"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </button>
+                </span>
               </div>
 
-              <select
-                value={slug}
-                onChange={(event) => onChangeTicketType(seat.id, event.target.value)}
-                aria-label={`Ticket type for seat ${seat.code}`}
-                className="mt-2 w-full rounded-lg bg-surface-raised px-2 py-1.5 text-xs font-semibold outline-none"
-              >
-                {allowedTypes.map((type) => (
-                  <option key={type.slug} value={type.slug}>
-                    {type.name}
-                  </option>
-                ))}
-              </select>
+              {/* Pills rather than a dropdown, as drawn: all the options and
+                  their prices are visible without opening anything. */}
+              <div className="mt-2.5 flex gap-1.5">
+                {allowedTypes.map((type) => {
+                  const active = type.slug === slug
+                  return (
+                    <button
+                      key={type.slug}
+                      type="button"
+                      onClick={() => onChangeTicketType(seat.id, type.slug)}
+                      aria-pressed={active}
+                      title={type.note ?? undefined}
+                      className={`flex-1 rounded-md px-1.5 py-1.5 text-[10px] font-bold whitespace-nowrap transition-colors ${
+                        active
+                          ? 'bg-brand text-ink'
+                          : 'bg-surface-raised text-ink-muted hover:text-ink'
+                      }`}
+                    >
+                      {type.name} {Math.round(type.priceRatio * 100)}%
+                    </button>
+                  )
+                })}
+              </div>
 
               {note && <p className="mt-1.5 text-[11px] text-ink-dim">{note}</p>}
             </div>

@@ -206,6 +206,7 @@ export function BookingModal({ session, movie, onClose }) {
                   onChangeTicketType={(seatId, slug) =>
                     setTicketTypeBySeat((current) => ({ ...current, [seatId]: slug }))
                   }
+                  onRemoveSeat={toggleSeat}
                   basePrice={basePrice}
                   maxSeats={maxSeats}
                   movieMinAge={minAge}
@@ -250,23 +251,37 @@ export function BookingModal({ session, movie, onClose }) {
               </div>
 
               <div className="w-[300px] shrink-0 rounded-2xl bg-surface p-5">
-                <p className="text-sm font-bold">Your seats</p>
-                <ul className="mt-3 space-y-2">
-                  {heldHold?.seats?.map((seat) => (
-                    <li key={seat.seatId} className="flex justify-between text-xs">
-                      <span className="font-semibold">
-                        {seat.code}
-                        <span className="ml-2 font-normal text-ink-muted">
-                          {seat.ticketType?.name}
-                        </span>
-                      </span>
-                      <span className="font-semibold">₾{seat.price}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 flex justify-between border-t border-line/60 pt-4">
-                  <span className="text-xs text-ink-muted">Total</span>
-                  <span className="text-lg font-extrabold">₾{heldHold?.subtotal ?? subtotal}</span>
+                <p className="text-[11px] font-bold tracking-[0.14em] text-ink-dim uppercase">
+                  Summary
+                </p>
+
+                <p className="mt-3 text-sm font-bold">
+                  {movie?.title ?? session.movie?.title}
+                </p>
+                <p className="mt-1 text-[11px] text-ink-muted">
+                  Hall {session.hall.name} · {session.date} · {session.time}
+                </p>
+
+                <dl className="mt-4 space-y-2 border-t border-line/60 pt-4 text-xs">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-ink-muted">Seats</dt>
+                    <dd className="text-right font-semibold">
+                      {heldHold?.seats?.map((seat) => seat.code).join(', ')}
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-ink-muted">Tickets</dt>
+                    <dd className="text-right font-semibold">{ticketBreakdown(heldHold?.seats)}</dd>
+                  </div>
+                </dl>
+
+                <div className="mt-4 flex items-center justify-between border-t border-line/60 pt-4">
+                  <span className="text-[11px] font-bold tracking-[0.14em] text-ink-dim uppercase">
+                    Subtotal
+                  </span>
+                  <span className="text-xl font-extrabold">
+                    ₾{heldHold?.subtotal ?? subtotal}
+                  </span>
                 </div>
 
                 <button
@@ -296,4 +311,16 @@ function StepTab({ active, label }) {
       {label}
     </span>
   )
+}
+
+/** "2 x Adult, 1 x Child" — grouped by ticket type, the way the design writes
+ *  it, rather than one line per seat. */
+function ticketBreakdown(seats) {
+  if (!seats?.length) return '—'
+  const counts = new Map()
+  for (const seat of seats) {
+    const name = seat.ticketType?.name ?? 'Ticket'
+    counts.set(name, (counts.get(name) ?? 0) + 1)
+  }
+  return [...counts].map(([name, n]) => `${n} x ${name}`).join(', ')
 }
