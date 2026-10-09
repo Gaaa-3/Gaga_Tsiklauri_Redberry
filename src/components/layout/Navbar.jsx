@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../../auth/useAuth'
+import { SearchBox } from './SearchBox'
 import { UserMenu } from './UserMenu'
 
 /** Sits on top of the page rather than in a band of its own: on the home page
@@ -25,7 +26,7 @@ export function Navbar() {
         </NavLink>
 
         <div className="ml-auto flex items-center gap-4">
-          <SearchField />
+          <SearchBox />
 
           {/* 'loading' is the brief moment on boot while a stored token is
             exchanged for /me. Rendering the guest buttons during it would
@@ -56,29 +57,5 @@ export function Navbar() {
         </div>
       </nav>
     </header>
-  )
-}
-
-/** Styling only for now; the typeahead that opens the results overlay is wired
- *  up when the search commit lands. */
-
-function SearchField() {
-  return (
-    <div className="relative w-[420px]">
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-ink-dim"
-      >
-        <circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M12.8 12.8 17 17" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-      <input
-        type="search"
-        placeholder="Search films and live events"
-        aria-label="Search films and live events"
-        className="h-11 w-full rounded-full bg-surface pr-4 pl-11 text-sm text-ink placeholder:text-ink-dim"
-      />
-    </div>
   )
 }
