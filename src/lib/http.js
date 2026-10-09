@@ -4,6 +4,16 @@
  *  Error contract: docs/API_REFERENCE.md, "Error handling". */
 import { clearToken, readToken } from './token'
 
+/** Set by the auth provider. http.js cannot reach React state, so a token that
+ *  the server has rejected is reported through here: the provider drops the
+ *  user and opens the login modal, and whatever was interrupted is replayed
+ *  once the user is back in. */
+let onUnauthorized = null
+
+export function setUnauthorizedHandler(handler) {
+  onUnauthorized = handler
+}
+
 const BASE_URL = (
   import.meta.env.VITE_API_BASE_URL ?? 'https://api.kinoxii.redberryinternship.ge/api'
 ).replace(/\/+$/, '')
@@ -103,8 +113,11 @@ export async function request(path, options = {}) {
   }
   if (!response.ok) {
     // A rejected token is dead for good, so drop it and let the next call go
-    // out as a guest. The login modal reopens from the 401 itself.
-    if (response.status === 401 && token) clearToken()
+    // out as a guest, then tell the app so the login modal can open.
+    if (response.status === 401 && token) {
+      clearToken()
+      onUnauthorized?.()
+    }
     throw await toApiError(response)
   }
   // 204 from /logout and DELETE /holds/{id} has no body to parse.

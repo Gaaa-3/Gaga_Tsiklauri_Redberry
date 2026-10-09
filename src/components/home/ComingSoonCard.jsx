@@ -15,7 +15,7 @@ import { AgeBadge } from '../ui/AgeBadge'
  *  a button inside an anchor is invalid HTML that keyboard and screen-reader
  *  users trip over. The poster and the title carry the link instead. */
 export function ComingSoonCard({ movie }) {
-  const { status, openLogin } = useAuth()
+  const { requireAuth } = useAuth()
   const queryClient = useQueryClient()
 
   const notify = useMutation({
@@ -29,14 +29,12 @@ export function ComingSoonCard({ movie }) {
   const notified = movie.isNotified || notify.isSuccess
 
   function onNotify() {
-    if (status !== 'authed') {
-      // A guest gets the login modal. Replaying the click afterwards is the
-      // pending-action work, which lands with the next slice.
-      openLogin()
-      return
-    }
-    if (notified || notify.isPending) return
-    notify.mutate()
+    // A guest gets the login modal, and this same call then runs by itself once
+    // they are in — they never press Notify Me twice.
+    requireAuth(() => {
+      if (movie.isNotified || notify.isPending) return
+      notify.mutate()
+    })
   }
 
   return (

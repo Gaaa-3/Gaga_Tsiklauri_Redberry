@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthProvider'
 import { AuthModals } from './components/auth/AuthModals'
+import { RequireAuth } from './components/auth/RequireAuth'
 import { Layout } from './components/layout/Layout'
 import { queryClient } from './lib/queryClient'
 import { HomePage } from './pages/Home'
@@ -22,7 +23,14 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/sessions" element={<SessionsPage />} />
               <Route path="/movies/:slug" element={<MovieDetailPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/profile"
+                element={
+                  <RequireAuth>
+                    <ProfilePage />
+                  </RequireAuth>
+                }
+              />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
