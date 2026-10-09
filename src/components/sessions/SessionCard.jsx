@@ -18,7 +18,7 @@ export function SessionCard({ session, onSelect }) {
       aria-label={`${session.time} at ${session.venue.name}, hall ${session.hall.name}${
         soldOut ? ' — sold out' : ''
       }`}
-      className={`flex w-[220px] shrink-0 flex-col rounded-xl border p-4 text-left transition-colors ${
+      className={`flex w-[276px] shrink-0 flex-col rounded-xl border p-4 text-left transition-colors ${
         soldOut
           ? 'cursor-not-allowed border-line/40 bg-surface-muted opacity-50'
           : 'border-line bg-surface hover:border-brand/60 hover:bg-surface-raised'
@@ -81,7 +81,7 @@ export function MovieSessionGroup({ group, onSelectSession }) {
         </div>
       </div>
 
-      <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
+      <div className="mt-4 flex gap-[18px] overflow-x-auto pb-2">
         {sessions.map((session) => (
           <SessionCard
             key={session.id}

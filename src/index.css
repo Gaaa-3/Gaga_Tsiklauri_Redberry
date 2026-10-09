@@ -42,10 +42,13 @@
   /* The navbar and footer gutter. Re-measured off the full-resolution Figma
      export: the Log in pill's right edge sits 68.9px in. */
   --spacing-gutter: 68px;
-  /* Home page sections sit slightly further in than the navbar does — the Now
-     Playing card's left edge measures 77.8px. That difference is in the design,
-     not a mistake. */
+  /* The home page's sections sit further in than anything else — the Now
+     Playing card's left edge measures 77.8px. */
   --spacing-rail: 78px;
+  /* Every other page — sessions, movie detail, profile — insets at 57px.
+     Measured on all three boards and they agree exactly, so the three
+     different values (69 navbar / 78 home / 57 pages) are in the design. */
+  --spacing-page: 57px;
   /* The navbar band. */
   --spacing-navbar: 108px;
 
@@ -53,6 +56,17 @@
      scale, which already matches the design: 12 / 14 / 16 / 18 / 20 / 30. */
   --text-hero: 60px;
   --text-hero--line-height: 1.05;
+}
+
+/* A seat under someone else's hold. The design distinguishes it from a sold
+   seat with diagonal hatching rather than another flat colour, so the legend's
+   four entries are actually four different things. */
+@utility seat-held {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--color-surface-raised) 0 4px,
+    transparent 4px 9px
+  );
 }
 
 html {

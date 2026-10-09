@@ -37,13 +37,13 @@ export function SessionsPage() {
   }
 
   return (
-    <div className="mx-auto w-content px-rail pt-navbar pb-20">
+    <div className="mx-auto w-content px-page pt-navbar pb-20">
       <header className="mt-10">
         <h1 className="text-3xl font-extrabold">Sessions</h1>
         <p className="mt-2 text-sm text-ink-muted">Browse showtimes across all venues</p>
       </header>
 
-      <div className="mt-8 flex gap-8">
+      <div className="mt-8 flex gap-[59px]">
         {options.isPending && <SidebarSkeleton />}
 
         {options.isError && (

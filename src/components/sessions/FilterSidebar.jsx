@@ -36,7 +36,7 @@ export function FilterSidebar({ options, filters, toggle, setFilters, clearAll, 
   }
 
   return (
-    <aside className="sticky top-28 h-fit w-[290px] shrink-0 rounded-2xl bg-surface p-6">
+    <aside className="sticky top-28 h-fit w-[356px] shrink-0 rounded-2xl bg-surface p-6">
       <h2 className="text-base font-bold">Filters</h2>
 
       <Group label="Venue">

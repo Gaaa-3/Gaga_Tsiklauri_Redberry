@@ -9,7 +9,7 @@ export function MovieHero({ movie }) {
       <div className="absolute inset-0 bg-gradient-to-r from-page via-page/75 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-page to-transparent" />
 
-      <div className="relative mx-auto flex h-full w-content items-center gap-10 px-rail pt-navbar">
+      <div className="relative mx-auto flex h-full w-content items-center gap-10 px-page pt-navbar">
         <img
           src={movie.posterUrl}
           alt={`${movie.title} poster`}

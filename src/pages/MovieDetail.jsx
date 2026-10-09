@@ -46,7 +46,7 @@ export function MovieDetailPage() {
 
   if (movie.isError) {
     return (
-      <div className="mx-auto w-content px-rail pt-48 pb-20">
+      <div className="mx-auto w-content px-page pt-48 pb-20">
         <ErrorRetry
           message={movie.error instanceof ApiError ? movie.error.message : 'Could not load the film.'}
           onRetry={() => void movie.refetch()}
@@ -73,7 +73,7 @@ export function MovieDetailPage() {
     <>
       <MovieHero movie={film} />
 
-      <div className="mx-auto flex w-content gap-10 px-rail pt-10 pb-20">
+      <div className="mx-auto flex w-content gap-10 px-page pt-10 pb-20">
         <div className="min-w-0 flex-1">
           <h2 className="text-xl font-extrabold">Sessions</h2>
 
@@ -136,7 +136,7 @@ function MovieDetailSkeleton() {
   return (
     <>
       <div className="h-[630px] w-full animate-pulse bg-surface-muted">
-        <div className="mx-auto flex h-full w-content items-center gap-10 px-rail pt-navbar">
+        <div className="mx-auto flex h-full w-content items-center gap-10 px-page pt-navbar">
           <div className="h-[400px] w-[280px] shrink-0 rounded-2xl bg-surface" />
           <div className="flex-1">
             <div className="h-4 w-24 rounded bg-surface" />
@@ -145,7 +145,7 @@ function MovieDetailSkeleton() {
           </div>
         </div>
       </div>
-      <div className="mx-auto flex w-content gap-10 px-rail pt-10 pb-20">
+      <div className="mx-auto flex w-content gap-10 px-page pt-10 pb-20">
         <div className="flex-1 animate-pulse">
           <div className="h-6 w-32 rounded bg-surface" />
           <div className="mt-5 h-16 w-[520px] rounded bg-surface" />

@@ -12,9 +12,9 @@ export function SessionGroupSkeleton() {
           <div className="mt-2 h-3 w-20 rounded bg-surface" />
         </div>
       </div>
-      <div className="mt-4 flex gap-3 overflow-hidden">
+      <div className="mt-4 flex gap-[18px] overflow-hidden">
         {Array.from({ length: 5 }, (_, i) => (
-          <div key={i} className="h-[132px] w-[220px] shrink-0 rounded-xl bg-surface" />
+          <div key={i} className="h-[132px] w-[276px] shrink-0 rounded-xl bg-surface" />
         ))}
       </div>
     </div>
@@ -23,7 +23,7 @@ export function SessionGroupSkeleton() {
 
 export function SidebarSkeleton() {
   return (
-    <aside className="h-fit w-[290px] shrink-0 animate-pulse rounded-2xl bg-surface p-6">
+    <aside className="h-fit w-[356px] shrink-0 animate-pulse rounded-2xl bg-surface p-6">
       <div className="h-5 w-20 rounded bg-surface-raised" />
       {Array.from({ length: 4 }, (_, group) => (
         <div key={group} className="mt-7">
