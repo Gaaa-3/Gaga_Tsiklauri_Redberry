@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useAuth } from '../../auth/useAuth'
 import { useFilterOptions } from '../../hooks/useFilterOptions'
@@ -6,6 +7,7 @@ import {
   useCountdown,
   useCreateOrder,
   useHoldSeats,
+  useReleaseHold,
   useSeatMap,
 } from '../../hooks/useBooking'
 import { ApiError } from '../../lib/http'
@@ -24,7 +26,9 @@ export function BookingModal({ session, movie, onClose }) {
   const options = useFilterOptions()
   const seatMap = useSeatMap(session.id)
   const hold = useHoldSeats(session.id)
+  const release = useReleaseHold()
   const order = useCreateOrder()
+  const queryClient = useQueryClient()
 
   const [step, setStep] = useState('seats')
   const [selected, setSelected] = useState([])
@@ -49,6 +53,17 @@ export function BookingModal({ session, movie, onClose }) {
         return sum + basePrice * (type?.priceRatio ?? 1)
       }, 0) * 100,
     ) / 100
+
+  /** Closing without paying must give the seats back rather than leaving them
+   *  locked for the rest of the 8 minutes — someone else is trying to book
+   *  them. Stepping back to the seat list does NOT release: that is still an
+   *  active booking. */
+  function onCloseModal() {
+    if (heldHold?.holdId && !paidOrder) {
+      release.mutate(heldHold.holdId)
+    }
+    onClose()
+  }
 
   function toggleSeat(seat) {
     setNotice(null)
@@ -123,7 +138,7 @@ export function BookingModal({ session, movie, onClose }) {
   return (
     <Modal
       title={movie?.title ?? session.movie?.title ?? 'Book tickets'}
-      onClose={onClose}
+      onClose={onCloseModal}
       widthClass="w-[1100px]"
     >
       {header}
@@ -218,8 +233,15 @@ export function BookingModal({ session, movie, onClose }) {
                   subtotal={subtotal}
                   createOrder={(input) => order.mutateAsync(input)}
                   onPaid={(created, error) => {
-                    if (error) handleContested(error)
-                    else setPaidOrder(created)
+                    if (error) {
+                      handleContested(error)
+                      return
+                    }
+                    setPaidOrder(created)
+                    // Those seats are sold now and there is a new order: both
+                    // the hall map and My Tickets would otherwise be stale.
+                    queryClient.invalidateQueries({ queryKey: ['seats', session.id] })
+                    queryClient.invalidateQueries({ queryKey: ['tickets'] })
                   }}
                 />
               </div>

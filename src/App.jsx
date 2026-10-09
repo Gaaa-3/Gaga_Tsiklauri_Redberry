@@ -4,6 +4,7 @@ import { AuthProvider } from './auth/AuthProvider'
 import { AuthModals } from './components/auth/AuthModals'
 import { RequireAuth } from './components/auth/RequireAuth'
 import { Layout } from './components/layout/Layout'
+import { ErrorBoundary } from './components/ui/ErrorBoundary'
 import { queryClient } from './lib/queryClient'
 import { HomePage } from './pages/Home'
 import { MovieDetailPage } from './pages/MovieDetail'
@@ -18,22 +19,26 @@ export default function App() {
         {/* Inside the router, because a protected action replaying after login
             will need to navigate. */}
         <AuthProvider>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/sessions" element={<SessionsPage />} />
-              <Route path="/movies/:slug" element={<MovieDetailPage />} />
-              <Route
-                path="/profile"
-                element={
-                  <RequireAuth>
-                    <ProfilePage />
-                  </RequireAuth>
-                }
-              />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
+          {/* Catches a render fault anywhere below and shows a message instead
+              of unmounting to a black screen. */}
+          <ErrorBoundary>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/sessions" element={<SessionsPage />} />
+                <Route path="/movies/:slug" element={<MovieDetailPage />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <RequireAuth>
+                      <ProfilePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </ErrorBoundary>
 
           <AuthModals />
         </AuthProvider>

@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { refundOrder } from '../api/tickets'
-import { getTickets } from '../api/tickets'
+import { getTickets, refundOrder } from '../api/tickets'
 
 /** `filter` is 'upcoming' or 'past' — the two tabs on My Tickets. */
 export function useTickets(filter) {
