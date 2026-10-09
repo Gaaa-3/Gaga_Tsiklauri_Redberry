@@ -3,7 +3,7 @@
 
 const STORAGE_KEY = 'kinoxii.token'
 
-export function readToken(): string | null {
+export function readToken() {
   try {
     return localStorage.getItem(STORAGE_KEY)
   } catch {
@@ -12,7 +12,7 @@ export function readToken(): string | null {
   }
 }
 
-export function writeToken(token: string): void {
+export function writeToken(token) {
   try {
     localStorage.setItem(STORAGE_KEY, token)
   } catch {
@@ -20,7 +20,7 @@ export function writeToken(token: string): void {
   }
 }
 
-export function clearToken(): void {
+export function clearToken() {
   try {
     localStorage.removeItem(STORAGE_KEY)
   } catch {

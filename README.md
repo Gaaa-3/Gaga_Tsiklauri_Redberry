@@ -6,7 +6,7 @@ Browse films, filter sessions across four venues, pick seats from a live hall ma
 
 ## Stack
 
-React 19 · TypeScript · Vite · Tailwind CSS v4 · React Router · TanStack Query · React Hook Form + Zod
+React 19 · JavaScript · Vite · Tailwind CSS v4 · React Router · TanStack Query · React Hook Form + Zod
 
 ## Running it
 

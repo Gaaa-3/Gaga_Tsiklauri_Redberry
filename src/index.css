@@ -25,8 +25,11 @@
   /* The one accent in the whole design: primary buttons, the active page, the
      logo's "XII", the age badge, the selected seat, low-seats warnings. */
   --color-brand: #ec3013;
-  /* Plenty of seats left. */
+  /* Plenty of seats left, and a complete profile. */
   --color-available: #4ade80;
+  /* Sampled off the profile dot in Home_authorized_incomplete.png: the one
+     amber in the design, used for "profile incomplete" and nothing else. */
+  --color-warning: #e27e04;
 
   /* ---- Text ------------------------------------------------------------ */
   --color-ink: #ffffff;

@@ -5,9 +5,9 @@ import { useFilterOptions } from '../hooks/useFilterOptions'
  *  /filter-options and shows the three states every screen in this app needs —
  *  loading, failed-with-a-retry, and loaded. The filter sidebar and the grouped
  *  session list replace this in a later commit. */
+
 export function SessionsPage() {
   const { data, isPending, isError, error, refetch, isFetching } = useFilterOptions()
-
   return (
     <Page title="Sessions" subtitle="Browse showtimes across all venues">
       {isPending && <p className="text-ink-muted">Loading venues…</p>}
